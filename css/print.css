@@ -1,0 +1,30 @@
+.topbar,
+.hero-actions,
+.controls,
+.legend,
+.table-tools,
+.calc {
+  display: none !important;
+}
+
+body {
+  background: #fff;
+  color: #111;
+}
+
+.panel,
+.stat {
+  border: 1px solid #ddd;
+  background: #fff;
+  box-shadow: none;
+}
+
+.muted,
+p,
+.lead {
+  color: #444 !important;
+}
+
+section {
+  break-inside: avoid;
+}

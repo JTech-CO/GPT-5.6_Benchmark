@@ -1,0 +1,48 @@
+:root {
+  --bg: #07090e;
+  --bg2: #0d111a;
+  --card: rgba(19, 24, 36, 0.82);
+  --card2: #111724;
+  --line: rgba(255, 255, 255, 0.095);
+  --line2: rgba(255, 255, 255, 0.16);
+  --text: #f5f7fb;
+  --muted: #a5afc2;
+  --soft: #717d93;
+  --accent: #ff7a45;
+  --green: #36d7a4;
+  --blue: #6aa8ff;
+  --purple: #b77bff;
+  --shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+  --radius: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(900px 520px at 10% -10%, rgba(255, 122, 69, 0.16), transparent 68%),
+    radial-gradient(800px 520px at 92% 12%, rgba(106, 168, 255, 0.12), transparent 70%),
+    linear-gradient(180deg, #07090e 0%, #090d15 54%, #07090e 100%);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+  line-height: 1.62;
+  letter-spacing: -0.018em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="GPT-5.6 Sol, Terra, Luna를 GPT-5.5, Claude Fable 5, Claude Opus 4.8과 공식 벤치마크로 비교한 인터랙티브 분석 페이지">
+<title>GPT‑5.6 공식 벤치마크 분석 — Sol · Terra · Luna</title>
+<link rel="stylesheet" href="./css/base.css">
+<link rel="stylesheet" href="./css/layout.css">
+<link rel="stylesheet" href="./css/components.css">
+<link rel="stylesheet" href="./css/responsive.css">
+<link rel="stylesheet" href="./css/print.css" media="print">
+<script type="module" src="./js/app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="brand-mark"></span><span>Frontier Model Review</span></a>
+    <nav class="navlinks">
+      <a href="#models">모델</a><a href="#benchmarks">벤치마크</a><a href="#pricing">가격</a><a href="#verdict">분석</a><a href="#sources">출처</a>
+    </nav>
+    <span class="badge"><span class="dot"></span>공식 자료 스냅샷</span>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">OPENAI · JULY 9, 2026 · OFFICIAL DATA REVIEW</div>
+    <h1><span class="gradient">GPT‑5.6</span><br>Sol · Terra · Luna</h1>
+    <p class="lead">GPT‑5.5에서 실제로 얼마나 발전했는지, Claude Fable 5·Opus 4.8과 어디서 앞서고 뒤지는지를 공식 발표 수치로만 분해한 인터랙티브 소개 페이지입니다.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#benchmarks">벤치마크 탐색</a>
+      <a class="btn" href="#pricing">비용 계산</a>
+      <button class="btn" id="printButton">PDF로 인쇄</button>
+    </div>
+    <div class="meta-line">
+      <span>데이터 기준: 2026-07-10 KST</span>
+      <span>39개 공식 벤치마크</span>
+      <span>외부 라이브러리 없는 정적 사이트</span>
+      <span>결측치는 0점으로 처리하지 않음</span>
+    </div>
+  </div>
+</section>
+
+<div class="stats-section">
+  <div class="wrap">
+    <div class="grid-stats">
+      <article class="stat"><div class="eyebrow">SOL VS GPT‑5.5</div><strong>36 / 37</strong><small>공통 백분율 벤치마크에서 Sol이 앞선 항목 수. 중앙값 개선폭은 +9.5%p입니다.</small></article>
+      <article class="stat"><div class="eyebrow">TERRA VALUE</div><strong>−50%</strong><small>GPT‑5.5 대비 입력·출력 토큰 가격을 절반으로 낮추면서 27개 항목에서 우위를 기록했습니다.</small></article>
+      <article class="stat"><div class="eyebrow">SOL VS OPUS 4.8</div><strong>21 / 23</strong><small>공통 백분율 항목 기준 승리 수. 중앙값 차이는 +8.2%p입니다.</small></article>
+      <article class="stat"><div class="eyebrow">LUNA ECONOMICS</div><strong>−80%</strong><small>GPT‑5.5 대비 입력·출력 가격 절감률. 절대 성능보다 처리량과 비용 최적화에 초점이 있습니다.</small></article>
+    </div>
+  </div>
+</div>
+
+<section id="models">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>세 가지 능력 등급</h2>
+      <p>Sol·Terra·Luna는 단순한 추론 강도 프리셋이 아니라 서로 다른 API 모델입니다. 세 모델 모두 1.05M 컨텍스트와 128K 최대 출력을 지원하지만 가격과 목표 워크로드가 다릅니다.</p>
+    </div>
+    <div class="model-grid">
+      <article class="panel model-card" data-model-card="Sol">
+        <div class="model-top"><div><div class="model-name">Sol</div><div class="model-tier">Frontier · 복합 전문 업무</div></div><span class="badge">FLAGSHIP</span></div>
+        <div class="price">$5 <small>입력</small> · $30 <small>출력</small></div><div class="price-sub">1M 토큰당 · GPT‑5.5와 동일 가격</div>
+        <div class="specs"><div class="spec"><b>1.05M</b><span>Context</span></div><div class="spec"><b>128K</b><span>Max output</span></div><div class="spec"><b>Max / Ultra</b><span>고강도 추론</span></div><div class="spec"><b>2026-02-16</b><span>Knowledge cutoff</span></div></div>
+      </article>
+      <article class="panel model-card" data-model-card="Terra">
+        <div class="model-top"><div><div class="model-name">Terra</div><div class="model-tier">Balanced · 일상·개발 업무</div></div><span class="badge">VALUE</span></div>
+        <div class="price">$2.5 <small>입력</small> · $15 <small>출력</small></div><div class="price-sub">1M 토큰당 · GPT‑5.5의 50%</div>
+        <div class="specs"><div class="spec"><b>1.05M</b><span>Context</span></div><div class="spec"><b>128K</b><span>Max output</span></div><div class="spec"><b>27 / 37</b><span>GPT‑5.5 대비 우위</span></div><div class="spec"><b>+3.5%p</b><span>중앙 개선폭</span></div></div>
+      </article>
+      <article class="panel model-card" data-model-card="Luna">
+        <div class="model-top"><div><div class="model-name">Luna</div><div class="model-tier">Efficient · 대량 처리</div></div><span class="badge">ECONOMY</span></div>
+        <div class="price">$1 <small>입력</small> · $6 <small>출력</small></div><div class="price-sub">1M 토큰당 · GPT‑5.5의 20%</div>
+        <div class="specs"><div class="spec"><b>1.05M</b><span>Context</span></div><div class="spec"><b>128K</b><span>Max output</span></div><div class="spec"><b>14 / 37</b><span>GPT‑5.5 대비 우위</span></div><div class="spec"><b>−1.2%p</b><span>중앙 차이</span></div></div>
+      </article>
+    </div>
+
+    <div class="callout">
+      <div class="panel">
+        <h3>GPT‑5.5 대비 핵심 변화</h3>
+        <p>Sol은 같은 API 단가에서 토큰 효율과 에이전트 지속성을 높인 세대교체입니다. 특히 컴퓨터 사용·CAD·사이버보안·장문 맥락의 개선폭이 큽니다.</p>
+        <div class="delta-list">
+          <div class="delta"><span>BenchCAD (Python tool)</span><b class="up">+27.6%p</b></div>
+          <div class="delta"><span>GraphWalks BFS · 1M</span><b class="up">+31.7%p</b></div>
+          <div class="delta"><span>SEC‑Bench Pro</span><b class="up">+25.4%p</b></div>
+          <div class="delta"><span>HealthBench Professional</span><b class="up">+11.0%p</b></div>
+          <div class="delta"><span>MRCR · 512K–1M</span><b class="down">−0.2%p</b></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Claude 대비 한 문장 결론</h3>
+        <p>Sol은 광범위한 업무에서 Opus 4.8을 뚜렷하게 앞서며, Fable 5와는 분야별 승부가 갈립니다. Fable 5는 SWE‑Bench Pro·GDPval·FrontierMath Tier 4·Toolathlon에서 강합니다.</p>
+        <div class="delta-list">
+          <div class="delta"><span>Sol − Fable · Coding Agent Index</span><b class="up">+2.8</b></div>
+          <div class="delta"><span>Sol − Fable · SWE‑Bench Pro</span><b class="down">−15.4%p</b></div>
+          <div class="delta"><span>Sol − Opus · BenchCAD</span><b class="up">+43.3%p</b></div>
+          <div class="delta"><span>Sol − Opus · Toolathlon</span><b class="down">−1.9%p</b></div>
+          <div class="delta"><span>Sol − Fable · API 출력 단가</span><b class="up">40% 저렴</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="benchmarks">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>벤치마크 탐색기</h2>
+      <p>동일한 벤치마크 행 안에서만 모델을 비교합니다. 백분율, Elo, Index처럼 단위가 다른 수치를 합산해 임의의 종합점수를 만들지 않았습니다.</p>
+    </div>
+    <div class="panel explorer">
+      <div class="controls">
+        <div class="control"><label for="benchmarkSelect">벤치마크</label><select id="benchmarkSelect"></select></div>
+        <div class="control"><label for="categorySelect">분야</label><select id="categorySelect"></select></div>
+        <div class="control"><label for="baselineSelect">차이 기준</label><select id="baselineSelect"></select></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">
+          <div><h3 id="chartHeading"></h3><p id="chartSubheading"></p></div>
+          <div class="legend" id="legend"></div>
+        </div>
+        <svg id="barChart" role="img" aria-label="모델별 벤치마크 막대그래프"></svg>
+        <div class="quick-deltas" id="quickDeltas"></div>
+        <p class="chart-note">막대 길이는 선택한 단일 벤치마크 안에서만 유효합니다. ‘—’는 미공개 또는 비교 불가능한 값입니다.</p>
+      </div>
+    </div>
+
+    <div class="panel table-panel benchmark-table-panel">
+      <div class="table-tools">
+        <div><b>전체 공식 수치</b><div class="source-badge">OpenAI GPT‑5.6 발표 표 기준 · 경쟁사 수치 포함</div></div>
+        <input id="tableSearch" type="search" placeholder="벤치마크 또는 분야 검색">
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>분야</th><th>벤치마크</th><th>단위</th><th>Sol</th><th>Terra</th><th>Luna</th><th>GPT‑5.5</th><th>Fable 5</th><th>Opus 4.8</th></tr></thead>
+        <tbody id="benchmarkBody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>API 비용 구조</h2>
+      <p>아래 계산은 기본 입력·출력 토큰 단가만 반영합니다. 캐시, 배치, 우선 처리, 도구 호출, 지역 처리, Claude fast mode 등은 포함하지 않습니다.</p>
+    </div>
+    <div class="price-layout">
+      <div class="panel calc">
+        <h3>워크로드 비용 계산기</h3>
+        <div class="input-grid">
+          <div class="control"><label for="inputTokens">입력 토큰 (백만)</label><input id="inputTokens" type="number" min="0" step="0.1" value="10"></div>
+          <div class="control"><label for="outputTokens">출력 토큰 (백만)</label><input id="outputTokens" type="number" min="0" step="0.1" value="2"></div>
+        </div>
+        <div class="results" id="costResults"></div>
+      </div>
+      <div class="panel price-analysis">
+        <div class="price-note"><strong>Sol = GPT‑5.5</strong><p>입력 $5, 출력 $30로 단가는 같습니다. 따라서 Sol의 경제성은 더 높은 성공률과 더 적은 토큰·지연시간에서 발생합니다.</p></div>
+        <div class="price-note"><strong>Terra = ½ GPT‑5.5</strong><p>가격은 정확히 절반이며 다수의 전문 업무·코딩 항목에서 GPT‑5.5를 앞섭니다. 가장 명확한 마이그레이션 후보입니다.</p></div>
+        <div class="price-note"><strong>Luna = ⅕ GPT‑5.5</strong><p>백분율 벤치마크 중앙값은 GPT‑5.5보다 1.2%p 낮지만, 단가가 80% 낮아 분류·요약·대량 에이전트 하위 작업에 유리합니다.</p></div>
+        <div class="price-note"><strong>Fable 5 = 프리미엄</strong><p>입력 $10, 출력 $50입니다. SWE‑Bench Pro와 일부 고난도 수학·도구 벤치에서 강하지만 범용 비용은 가장 높습니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="verdict">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>상세 판정</h2>
+      <p>벤치마크 순위만으로 실제 제품 선택을 끝내지 않고, 작업 성격·오류 비용·지연시간·토큰 예산을 함께 고려해야 합니다.</p>
+    </div>
+    <div class="verdict-grid">
+      <article class="panel verdict">
+        <h3>Sol: 명확한 세대교체</h3>
+        <p>GPT‑5.5와 가격이 같으면서 거의 모든 공통 백분율 평가에서 개선됐습니다.</p>
+        <ul><li>전문 에이전트·CAD·보안·장문 맥락에서 큰 상승</li><li>Fable 5 대비 SWE‑Bench Pro와 FrontierMath Tier 4는 열세</li><li>최고 품질이 실패 비용을 줄이는 업무에 적합</li></ul>
+      </article>
+      <article class="panel verdict">
+        <h3>Terra: 가장 현실적인 기본값</h3>
+        <p>GPT‑5.5의 절반 가격으로 중앙값 +3.5%p를 기록해 성능/달러가 크게 개선됐습니다.</p>
+        <ul><li>일반 개발·리서치·문서·에이전트 기본 모델</li><li>고난도 수학·멀티모달 일부는 GPT‑5.5보다 소폭 낮음</li><li>Fable 5 절대 성능보다 비용 효율 우선 시 유리</li></ul>
+      </article>
+      <article class="panel verdict">
+        <h3>Luna: ‘더 좋은 5.5’가 아닌 별도 등급</h3>
+        <p>공통 평가의 다수에서는 GPT‑5.5보다 낮지만 가격은 5분의 1입니다.</p>
+        <ul><li>Terminal·일부 코딩·일상 전문 업무는 근접</li><li>긴 컨텍스트 MRCR과 고난도 수학에서 격차가 큼</li><li>대량 전처리·라우팅·서브에이전트에 적합</li></ul>
+      </article>
+      <article class="panel verdict">
+        <h3>Claude: 여전히 강한 전문 영역</h3>
+        <p>Fable 5는 일부 코딩·수학·도구 사용에서 최고점을 유지하고, Opus 4.8은 균형 잡힌 경쟁력을 보입니다.</p>
+        <ul><li>Fable 5: SWE‑Bench Pro 80%, FrontierMath T4 87.8%</li><li>Opus 4.8: Toolathlon과 SWE‑Bench Pro에서 Sol보다 높음</li><li>다만 Sol/Terra 대비 API 비용과 다수 영역 성능은 불리</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>검증 방법과 출처</h2>
+      <p>이 페이지의 숫자는 2026년 7월 9일 OpenAI 발표와 양사 공식 문서에서 수집했습니다. 독립 재현 실험이 아닌 공급사 공개 결과라는 한계가 있습니다.</p>
+    </div>
+    <div class="method">
+      <div class="panel">
+        <h3>해석 시 주의사항</h3>
+        <div class="notice">“공식”은 측정이 중립적이라는 뜻이 아니라, 출처와 평가 조건이 공개된 공급사 자료라는 뜻입니다.</div>
+        <ul>
+          <li>추론 강도, 도구 사용, 에이전트 하네스, 샘플 수가 벤치마크마다 다릅니다.</li>
+          <li>OpenAI의 비용·지연시간 비교는 생산 동작을 오프라인 시뮬레이션한 추정치이며 실제 결과는 달라질 수 있습니다.</li>
+          <li>HealthBench Professional은 OpenAI의 공식 채점 방식으로 계산되어 Anthropic 시스템 카드 수치와 직접 비교할 수 없다고 명시돼 있습니다.</li>
+          <li>내부 벤치마크는 외부 재현성이 제한됩니다. 결측치는 패배나 0점으로 계산하지 않았습니다.</li>
+          <li>“36/37”, 중앙값, 승패 수는 이 페이지가 공식 표의 공통 백분율 항목으로 재계산한 파생 통계입니다.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>공식 링크</h3>
+        <div class="sources" id="sourceList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <span>GPT‑5.6 Benchmark Review · Generated 2026‑07‑10</span>
+    <span>정적 모듈형 웹사이트 · 데이터와 시각화 스크립트 분리</span>
+  </div>
+</footer>
+</body>
+</html>

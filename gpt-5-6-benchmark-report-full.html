@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="GPT-5.6 Sol, Terra, Luna를 GPT-5.5, Claude Fable 5, Claude Opus 4.8과 공식 벤치마크로 비교한 인터랙티브 분석 페이지">
+<title>GPT‑5.6 공식 벤치마크 분석 — Sol · Terra · Luna</title>
+<style>
+/* PC alignment fix: keep the stats grid inside the same centered .wrap container as other sections. */
+:root {
+  --bg:#07090e; --bg2:#0d111a; --card:rgba(19,24,36,.82); --card2:#111724;
+  --line:rgba(255,255,255,.095); --line2:rgba(255,255,255,.16);
+  --text:#f5f7fb; --muted:#a5afc2; --soft:#717d93;
+  --accent:#ff7a45; --green:#36d7a4; --blue:#6aa8ff; --purple:#b77bff;
+  --shadow:0 22px 70px rgba(0,0,0,.38); --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(900px 520px at 10% -10%,rgba(255,122,69,.16),transparent 68%),
+ radial-gradient(800px 520px at 92% 12%,rgba(106,168,255,.12),transparent 70%),
+ linear-gradient(180deg,#07090e 0%,#090d15 54%,#07090e 100%);
+ color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
+ line-height:1.62;letter-spacing:-.018em}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+.wrap{width:min(1220px,calc(100% - 36px));margin:auto}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(7,9,14,.78);backdrop-filter:blur(18px);
+border-bottom:1px solid var(--line)}
+.nav{height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.04em}
+.brand-mark{width:31px;height:31px;border-radius:10px;background:
+ conic-gradient(from 220deg,var(--accent),#ffcc72,var(--green),var(--blue),var(--purple),var(--accent));
+box-shadow:0 0 30px rgba(255,122,69,.25)}
+.navlinks{display:flex;gap:20px;color:var(--muted);font-size:14px}
+.navlinks a:hover{color:#fff}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:7px 11px;border-radius:999px;
+font-size:12px;color:#cbd2df;background:rgba(255,255,255,.035)}
+.dot{width:7px;height:7px;border-radius:99px;background:var(--green);box-shadow:0 0 14px var(--green)}
+
+.hero{padding:92px 0 58px;position:relative}
+.kicker{display:inline-flex;gap:9px;align-items:center;color:#ffd7c7;font-weight:700;font-size:13px;text-transform:uppercase;
+letter-spacing:.08em}
+h1{font-size:clamp(48px,8vw,96px);line-height:.98;letter-spacing:-.072em;margin:22px 0 25px;max-width:980px}
+.gradient{background:linear-gradient(100deg,#fff 10%,#ffbd9d 42%,#8ac0ff 70%,#d6b8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(18px,2.2vw,24px);color:#c0c8d7;max-width:900px;margin:0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 17px;border-radius:13px;border:1px solid var(--line2);
+background:rgba(255,255,255,.04);color:#fff;font-weight:720;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.07)}
+.btn.primary{background:#f4f5f8;color:#090b10;border-color:#fff}
+.meta-line{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px;color:var(--soft);font-size:13px}
+.meta-line span{display:flex;align-items:center;gap:8px}
+.meta-line span:before{content:"";width:4px;height:4px;border-radius:50%;background:#657086}
+
+.stats-section{width:100%;padding:22px 0 72px}
+.grid-stats{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0}
+.stat{min-width:0;background:linear-gradient(155deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid var(--line);
+border-radius:20px;padding:22px;min-height:150px;box-shadow:var(--shadow)}
+.stat strong{display:block;font-size:clamp(28px,4vw,43px);line-height:1.05;letter-spacing:-.05em;margin:10px 0}
+.stat small{color:var(--muted);font-size:13px}
+.stat .eyebrow{font-size:12px;color:#d3d8e3;text-transform:uppercase;letter-spacing:.07em;font-weight:750}
+
+section{padding:72px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:28px}
+.section-head h2{font-size:clamp(31px,5vw,52px);line-height:1.05;letter-spacing:-.055em;margin:0}
+.section-head p{max-width:610px;color:var(--muted);margin:0}
+.panel{background:linear-gradient(160deg,rgba(20,26,39,.95),rgba(12,16,25,.94));border:1px solid var(--line);
+border-radius:var(--radius);box-shadow:var(--shadow)}
+.model-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.model-card{position:relative;padding:24px;overflow:hidden;min-height:295px}
+.model-card:after{content:"";position:absolute;right:-70px;top:-70px;width:190px;height:190px;border-radius:50%;
+background:radial-gradient(circle,var(--model-color),transparent 66%);opacity:.19}
+.model-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.model-name{font-size:29px;font-weight:850;letter-spacing:-.05em}
+.model-tier{color:var(--muted);font-size:13px;margin-top:3px}
+.price{font-size:26px;font-weight:800;letter-spacing:-.04em;margin:30px 0 5px}
+.price-sub{font-size:12px;color:var(--soft)}
+.specs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:23px}
+.spec{padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.spec b{display:block;font-size:14px} .spec span{font-size:11px;color:var(--soft)}
+
+.callout{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-top:16px}
+.callout>div{padding:26px}
+.callout h3{font-size:24px;margin:0 0 10px;letter-spacing:-.035em}
+.callout p{color:var(--muted);margin:0}
+.delta-list{display:grid;gap:9px;margin-top:18px}
+.delta{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:10px;font-size:14px}
+.up{color:var(--green)} .down{color:#ff8a8a} .neutral{color:#d9dfea}
+
+.explorer{padding:24px}
+.controls{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:12px;margin-bottom:20px}
+.control label{display:block;font-size:12px;color:var(--soft);margin:0 0 7px 3px;font-weight:700}
+select,input[type="search"],input[type="number"]{width:100%;background:#0b1019;color:#fff;border:1px solid var(--line2);border-radius:12px;padding:12px 13px;outline:none}
+select:focus,input:focus{border-color:#7082a5;box-shadow:0 0 0 3px rgba(112,130,165,.12)}
+.chart-wrap{border:1px solid var(--line);border-radius:18px;background:rgba(5,8,13,.55);padding:18px;min-height:410px}
+.chart-title{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:15px}
+.chart-title h3{margin:0;font-size:22px;letter-spacing:-.035em}
+.chart-title p{margin:2px 0 0;color:var(--soft);font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.legend button{border:1px solid var(--line);background:rgba(255,255,255,.03);color:#d7ddea;border-radius:999px;padding:6px 9px;font-size:11px;cursor:pointer}
+.legend button.off{opacity:.35;text-decoration:line-through}
+#barChart{width:100%;height:320px;display:block;overflow:visible}
+.chart-note{margin-top:10px;font-size:12px;color:var(--soft)}
+.quick-deltas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
+.quick-delta{border:1px solid var(--line);border-radius:14px;padding:13px;background:rgba(255,255,255,.025)}
+.quick-delta b{font-size:18px} .quick-delta span{display:block;color:var(--soft);font-size:11px}
+
+.table-panel{padding:20px;overflow:hidden}
+.table-tools{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}
+.table-tools input{max-width:390px}
+.table-scroll{overflow:auto;max-height:720px;border:1px solid var(--line);border-radius:15px}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px;min-width:980px}
+th,td{padding:12px 11px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{position:sticky;top:0;z-index:3;background:#121825;color:#cfd5e1;font-size:11px;text-transform:uppercase;letter-spacing:.045em}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+tbody tr:hover td{background:rgba(255,255,255,.025)}
+td.best{color:#fff;font-weight:850;background:rgba(54,215,164,.075)}
+td.missing{color:#515b6d}
+.cat-chip{font-size:11px;color:#b9c2d2;border:1px solid var(--line);border-radius:999px;padding:5px 8px}
+.source-badge{font-size:10px;color:#9ba6ba}
+
+.price-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:16px}
+.calc{padding:24px}
+.calc h3{margin:0 0 18px;font-size:25px}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.results{margin-top:18px;display:grid;gap:9px}
+.cost-row{display:grid;grid-template-columns:155px 1fr 86px;gap:12px;align-items:center}
+.cost-bar{height:9px;border-radius:99px;background:#202838;overflow:hidden}
+.cost-bar i{display:block;height:100%;border-radius:inherit}
+.cost-value{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.price-analysis{padding:27px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.price-note{border:1px solid var(--line);border-radius:17px;padding:18px;background:rgba(255,255,255,.025)}
+.price-note strong{font-size:22px;display:block;margin-bottom:8px}
+.price-note p{font-size:13px;color:var(--muted);margin:0}
+
+.verdict-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.verdict{padding:25px}
+.verdict h3{margin:0 0 9px;font-size:24px}
+.verdict p{margin:0;color:var(--muted)}
+.verdict ul{padding-left:18px;color:#c5cddd;margin:17px 0 0}
+.verdict li{margin:8px 0}
+
+.method{display:grid;grid-template-columns:.85fr 1.15fr;gap:16px}
+.method>div{padding:25px}
+.method h3{margin:0 0 12px;font-size:24px}
+.method p,.method li{color:var(--muted)}
+.notice{border-left:3px solid var(--accent);padding:13px 15px;background:rgba(255,122,69,.06);border-radius:0 12px 12px 0;color:#dce1eb;font-size:13px}
+.sources{display:grid;gap:10px}
+.source{display:block;padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);transition:.2s}
+.source:hover{border-color:var(--line2);transform:translateX(3px)}
+.source b{display:block} .source span{font-size:12px;color:var(--soft)}
+
+footer{padding:46px 0 70px;color:var(--soft);font-size:12px;border-top:1px solid var(--line)}
+.footer-grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+@media(max-width:980px){
+ .grid-stats{grid-template-columns:repeat(2,1fr)} .model-grid{grid-template-columns:1fr}
+ .callout,.price-layout,.method{grid-template-columns:1fr} .controls{grid-template-columns:1fr}
+ .price-analysis{grid-template-columns:1fr} .navlinks{display:none}
+}
+@media(max-width:650px){
+ .wrap{width:min(100% - 22px,1220px)} .hero{padding-top:62px} h1{font-size:52px}
+ .grid-stats,.verdict-grid{grid-template-columns:1fr} .quick-deltas{grid-template-columns:1fr}
+ .section-head{display:block} .section-head p{margin-top:12px}
+ .input-grid{grid-template-columns:1fr} .cost-row{grid-template-columns:110px 1fr 76px}
+ .chart-title{display:block} .legend{justify-content:flex-start;margin-top:10px}
+}
+@media print{
+ .topbar,.hero-actions,.controls,.legend,.table-tools,.calc{display:none!important}
+ body{background:#fff;color:#111} .panel,.stat{box-shadow:none;background:#fff;border:1px solid #ddd}
+ .muted,p,.lead{color:#444!important} section{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="brand-mark"></span><span>Frontier Model Review</span></a>
+    <nav class="navlinks">
+      <a href="#models">모델</a><a href="#benchmarks">벤치마크</a><a href="#pricing">가격</a><a href="#verdict">분석</a><a href="#sources">출처</a>
+    </nav>
+    <span class="badge"><span class="dot"></span>공식 자료 스냅샷</span>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">OPENAI · JULY 9, 2026 · OFFICIAL DATA REVIEW</div>
+    <h1><span class="gradient">GPT‑5.6</span><br>Sol · Terra · Luna</h1>
+    <p class="lead">GPT‑5.5에서 실제로 얼마나 발전했는지, Claude Fable 5·Opus 4.8과 어디서 앞서고 뒤지는지를 공식 발표 수치로만 분해한 인터랙티브 소개 페이지입니다.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#benchmarks">벤치마크 탐색</a>
+      <a class="btn" href="#pricing">비용 계산</a>
+      <button class="btn" onclick="window.print()">PDF로 인쇄</button>
+    </div>
+    <div class="meta-line">
+      <span>데이터 기준: 2026-07-10 KST</span>
+      <span>39개 공식 벤치마크</span>
+      <span>외부 라이브러리 없는 단일 HTML</span>
+      <span>결측치는 0점으로 처리하지 않음</span>
+    </div>
+  </div>
+</section>
+
+<div class="stats-section">
+  <div class="wrap">
+    <div class="grid-stats">
+      <article class="stat"><div class="eyebrow">SOL VS GPT‑5.5</div><strong>36 / 37</strong><small>공통 백분율 벤치마크에서 Sol이 앞선 항목 수. 중앙값 개선폭은 +9.5%p입니다.</small></article>
+      <article class="stat"><div class="eyebrow">TERRA VALUE</div><strong>−50%</strong><small>GPT‑5.5 대비 입력·출력 토큰 가격을 절반으로 낮추면서 27개 항목에서 우위를 기록했습니다.</small></article>
+      <article class="stat"><div class="eyebrow">SOL VS OPUS 4.8</div><strong>21 / 23</strong><small>공통 백분율 항목 기준 승리 수. 중앙값 차이는 +8.2%p입니다.</small></article>
+      <article class="stat"><div class="eyebrow">LUNA ECONOMICS</div><strong>−80%</strong><small>GPT‑5.5 대비 입력·출력 가격 절감률. 절대 성능보다 처리량과 비용 최적화에 초점이 있습니다.</small></article>
+    </div>
+  </div>
+</div>
+
+<section id="models">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>세 가지 능력 등급</h2>
+      <p>Sol·Terra·Luna는 단순한 추론 강도 프리셋이 아니라 서로 다른 API 모델입니다. 세 모델 모두 1.05M 컨텍스트와 128K 최대 출력을 지원하지만 가격과 목표 워크로드가 다릅니다.</p>
+    </div>
+    <div class="model-grid">
+      <article class="panel model-card" style="--model-color:#ff7a45">
+        <div class="model-top"><div><div class="model-name">Sol</div><div class="model-tier">Frontier · 복합 전문 업무</div></div><span class="badge">FLAGSHIP</span></div>
+        <div class="price">$5 <small>입력</small> · $30 <small>출력</small></div><div class="price-sub">1M 토큰당 · GPT‑5.5와 동일 가격</div>
+        <div class="specs"><div class="spec"><b>1.05M</b><span>Context</span></div><div class="spec"><b>128K</b><span>Max output</span></div><div class="spec"><b>Max / Ultra</b><span>고강도 추론</span></div><div class="spec"><b>2026-02-16</b><span>Knowledge cutoff</span></div></div>
+      </article>
+      <article class="panel model-card" style="--model-color:#36d7a4">
+        <div class="model-top"><div><div class="model-name">Terra</div><div class="model-tier">Balanced · 일상·개발 업무</div></div><span class="badge">VALUE</span></div>
+        <div class="price">$2.5 <small>입력</small> · $15 <small>출력</small></div><div class="price-sub">1M 토큰당 · GPT‑5.5의 50%</div>
+        <div class="specs"><div class="spec"><b>1.05M</b><span>Context</span></div><div class="spec"><b>128K</b><span>Max output</span></div><div class="spec"><b>27 / 37</b><span>GPT‑5.5 대비 우위</span></div><div class="spec"><b>+3.5%p</b><span>중앙 개선폭</span></div></div>
+      </article>
+      <article class="panel model-card" style="--model-color:#6aa8ff">
+        <div class="model-top"><div><div class="model-name">Luna</div><div class="model-tier">Efficient · 대량 처리</div></div><span class="badge">ECONOMY</span></div>
+        <div class="price">$1 <small>입력</small> · $6 <small>출력</small></div><div class="price-sub">1M 토큰당 · GPT‑5.5의 20%</div>
+        <div class="specs"><div class="spec"><b>1.05M</b><span>Context</span></div><div class="spec"><b>128K</b><span>Max output</span></div><div class="spec"><b>14 / 37</b><span>GPT‑5.5 대비 우위</span></div><div class="spec"><b>−1.2%p</b><span>중앙 차이</span></div></div>
+      </article>
+    </div>
+
+    <div class="callout">
+      <div class="panel">
+        <h3>GPT‑5.5 대비 핵심 변화</h3>
+        <p>Sol은 같은 API 단가에서 토큰 효율과 에이전트 지속성을 높인 세대교체입니다. 특히 컴퓨터 사용·CAD·사이버보안·장문 맥락의 개선폭이 큽니다.</p>
+        <div class="delta-list">
+          <div class="delta"><span>BenchCAD (Python tool)</span><b class="up">+27.6%p</b></div>
+          <div class="delta"><span>GraphWalks BFS · 1M</span><b class="up">+31.7%p</b></div>
+          <div class="delta"><span>SEC‑Bench Pro</span><b class="up">+25.4%p</b></div>
+          <div class="delta"><span>HealthBench Professional</span><b class="up">+11.0%p</b></div>
+          <div class="delta"><span>MRCR · 512K–1M</span><b class="down">−0.2%p</b></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Claude 대비 한 문장 결론</h3>
+        <p>Sol은 광범위한 업무에서 Opus 4.8을 뚜렷하게 앞서며, Fable 5와는 분야별 승부가 갈립니다. Fable 5는 SWE‑Bench Pro·GDPval·FrontierMath Tier 4·Toolathlon에서 강합니다.</p>
+        <div class="delta-list">
+          <div class="delta"><span>Sol − Fable · Coding Agent Index</span><b class="up">+2.8</b></div>
+          <div class="delta"><span>Sol − Fable · SWE‑Bench Pro</span><b class="down">−15.4%p</b></div>
+          <div class="delta"><span>Sol − Opus · BenchCAD</span><b class="up">+43.3%p</b></div>
+          <div class="delta"><span>Sol − Opus · Toolathlon</span><b class="down">−1.9%p</b></div>
+          <div class="delta"><span>Sol − Fable · API 출력 단가</span><b class="up">40% 저렴</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="benchmarks">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>벤치마크 탐색기</h2>
+      <p>동일한 벤치마크 행 안에서만 모델을 비교합니다. 백분율, Elo, Index처럼 단위가 다른 수치를 합산해 임의의 종합점수를 만들지 않았습니다.</p>
+    </div>
+    <div class="panel explorer">
+      <div class="controls">
+        <div class="control"><label for="benchmarkSelect">벤치마크</label><select id="benchmarkSelect"></select></div>
+        <div class="control"><label for="categorySelect">분야</label><select id="categorySelect"></select></div>
+        <div class="control"><label for="baselineSelect">차이 기준</label><select id="baselineSelect"></select></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">
+          <div><h3 id="chartHeading"></h3><p id="chartSubheading"></p></div>
+          <div class="legend" id="legend"></div>
+        </div>
+        <svg id="barChart" role="img" aria-label="모델별 벤치마크 막대그래프"></svg>
+        <div class="quick-deltas" id="quickDeltas"></div>
+        <p class="chart-note">막대 길이는 선택한 단일 벤치마크 안에서만 유효합니다. ‘—’는 미공개 또는 비교 불가능한 값입니다.</p>
+      </div>
+    </div>
+
+    <div class="panel table-panel" style="margin-top:16px">
+      <div class="table-tools">
+        <div><b>전체 공식 수치</b><div class="source-badge">OpenAI GPT‑5.6 발표 표 기준 · 경쟁사 수치 포함</div></div>
+        <input id="tableSearch" type="search" placeholder="벤치마크 또는 분야 검색">
+      </div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>분야</th><th>벤치마크</th><th>단위</th><th>Sol</th><th>Terra</th><th>Luna</th><th>GPT‑5.5</th><th>Fable 5</th><th>Opus 4.8</th></tr></thead>
+        <tbody id="benchmarkBody"></tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>API 비용 구조</h2>
+      <p>아래 계산은 기본 입력·출력 토큰 단가만 반영합니다. 캐시, 배치, 우선 처리, 도구 호출, 지역 처리, Claude fast mode 등은 포함하지 않습니다.</p>
+    </div>
+    <div class="price-layout">
+      <div class="panel calc">
+        <h3>워크로드 비용 계산기</h3>
+        <div class="input-grid">
+          <div class="control"><label for="inputTokens">입력 토큰 (백만)</label><input id="inputTokens" type="number" min="0" step="0.1" value="10"></div>
+          <div class="control"><label for="outputTokens">출력 토큰 (백만)</label><input id="outputTokens" type="number" min="0" step="0.1" value="2"></div>
+        </div>
+        <div class="results" id="costResults"></div>
+      </div>
+      <div class="panel price-analysis">
+        <div class="price-note"><strong>Sol = GPT‑5.5</strong><p>입력 $5, 출력 $30로 단가는 같습니다. 따라서 Sol의 경제성은 더 높은 성공률과 더 적은 토큰·지연시간에서 발생합니다.</p></div>
+        <div class="price-note"><strong>Terra = ½ GPT‑5.5</strong><p>가격은 정확히 절반이며 다수의 전문 업무·코딩 항목에서 GPT‑5.5를 앞섭니다. 가장 명확한 마이그레이션 후보입니다.</p></div>
+        <div class="price-note"><strong>Luna = ⅕ GPT‑5.5</strong><p>백분율 벤치마크 중앙값은 GPT‑5.5보다 1.2%p 낮지만, 단가가 80% 낮아 분류·요약·대량 에이전트 하위 작업에 유리합니다.</p></div>
+        <div class="price-note"><strong>Fable 5 = 프리미엄</strong><p>입력 $10, 출력 $50입니다. SWE‑Bench Pro와 일부 고난도 수학·도구 벤치에서 강하지만 범용 비용은 가장 높습니다.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="verdict">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>상세 판정</h2>
+      <p>벤치마크 순위만으로 실제 제품 선택을 끝내지 않고, 작업 성격·오류 비용·지연시간·토큰 예산을 함께 고려해야 합니다.</p>
+    </div>
+    <div class="verdict-grid">
+      <article class="panel verdict">
+        <h3>Sol: 명확한 세대교체</h3>
+        <p>GPT‑5.5와 가격이 같으면서 거의 모든 공통 백분율 평가에서 개선됐습니다.</p>
+        <ul><li>전문 에이전트·CAD·보안·장문 맥락에서 큰 상승</li><li>Fable 5 대비 SWE‑Bench Pro와 FrontierMath Tier 4는 열세</li><li>최고 품질이 실패 비용을 줄이는 업무에 적합</li></ul>
+      </article>
+      <article class="panel verdict">
+        <h3>Terra: 가장 현실적인 기본값</h3>
+        <p>GPT‑5.5의 절반 가격으로 중앙값 +3.5%p를 기록해 성능/달러가 크게 개선됐습니다.</p>
+        <ul><li>일반 개발·리서치·문서·에이전트 기본 모델</li><li>고난도 수학·멀티모달 일부는 GPT‑5.5보다 소폭 낮음</li><li>Fable 5 절대 성능보다 비용 효율 우선 시 유리</li></ul>
+      </article>
+      <article class="panel verdict">
+        <h3>Luna: ‘더 좋은 5.5’가 아닌 별도 등급</h3>
+        <p>공통 평가의 다수에서는 GPT‑5.5보다 낮지만 가격은 5분의 1입니다.</p>
+        <ul><li>Terminal·일부 코딩·일상 전문 업무는 근접</li><li>긴 컨텍스트 MRCR과 고난도 수학에서 격차가 큼</li><li>대량 전처리·라우팅·서브에이전트에 적합</li></ul>
+      </article>
+      <article class="panel verdict">
+        <h3>Claude: 여전히 강한 전문 영역</h3>
+        <p>Fable 5는 일부 코딩·수학·도구 사용에서 최고점을 유지하고, Opus 4.8은 균형 잡힌 경쟁력을 보입니다.</p>
+        <ul><li>Fable 5: SWE‑Bench Pro 80%, FrontierMath T4 87.8%</li><li>Opus 4.8: Toolathlon과 SWE‑Bench Pro에서 Sol보다 높음</li><li>다만 Sol/Terra 대비 API 비용과 다수 영역 성능은 불리</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>검증 방법과 출처</h2>
+      <p>이 페이지의 숫자는 2026년 7월 9일 OpenAI 발표와 양사 공식 문서에서 수집했습니다. 독립 재현 실험이 아닌 공급사 공개 결과라는 한계가 있습니다.</p>
+    </div>
+    <div class="method">
+      <div class="panel">
+        <h3>해석 시 주의사항</h3>
+        <div class="notice">“공식”은 측정이 중립적이라는 뜻이 아니라, 출처와 평가 조건이 공개된 공급사 자료라는 뜻입니다.</div>
+        <ul>
+          <li>추론 강도, 도구 사용, 에이전트 하네스, 샘플 수가 벤치마크마다 다릅니다.</li>
+          <li>OpenAI의 비용·지연시간 비교는 생산 동작을 오프라인 시뮬레이션한 추정치이며 실제 결과는 달라질 수 있습니다.</li>
+          <li>HealthBench Professional은 OpenAI의 공식 채점 방식으로 계산되어 Anthropic 시스템 카드 수치와 직접 비교할 수 없다고 명시돼 있습니다.</li>
+          <li>내부 벤치마크는 외부 재현성이 제한됩니다. 결측치는 패배나 0점으로 계산하지 않았습니다.</li>
+          <li>“36/37”, 중앙값, 승패 수는 이 페이지가 공식 표의 공통 백분율 항목으로 재계산한 파생 통계입니다.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>공식 링크</h3>
+        <div class="sources" id="sourceList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <span>GPT‑5.6 Benchmark Review · Generated 2026‑07‑10</span>
+    <span>정적 단일 HTML · 데이터와 시각화 스크립트 내장</span>
+  </div>
+</footer>
+
+<script>
+const DATA=[{"category":"전문 업무","name":"Agents' Last Exam","unit":"%","Sol":52.7,"Terra":50.4,"Luna":50.3,"GPT-5.5":46.9,"Fable 5":40.5,"Opus 4.8":45.2},{"category":"전문 업무","name":"GDPval-AA v2","unit":"Elo","Sol":1747.8,"Terra":1593.0,"Luna":1591.8,"GPT-5.5":1493.7,"Fable 5":1759.6,"Opus 4.8":1600.1},{"category":"전문 업무","name":"Management Consulting Tasks (Internal)","unit":"%","Sol":43.2,"Terra":37.2,"Luna":35.4,"GPT-5.5":31.3,"Fable 5":35.5,"Opus 4.8":31.6},{"category":"전문 업무","name":"Big Finance Bench","unit":"%","Sol":53.0,"Terra":51.0,"Luna":36.0,"GPT-5.5":49.0,"Fable 5":null,"Opus 4.8":44.0},{"category":"코딩","name":"Artificial Analysis Coding Agent Index v1.1","unit":"Index","Sol":80.0,"Terra":77.4,"Luna":74.6,"GPT-5.5":76.4,"Fable 5":77.2,"Opus 4.8":72.5},{"category":"코딩","name":"SWE-Bench Pro","unit":"%","Sol":64.6,"Terra":63.4,"Luna":62.7,"GPT-5.5":59.4,"Fable 5":80.0,"Opus 4.8":69.2},{"category":"코딩","name":"DeepSWE v1.1","unit":"%","Sol":72.7,"Terra":69.6,"Luna":67.2,"GPT-5.5":67.0,"Fable 5":69.7,"Opus 4.8":59.0},{"category":"코딩","name":"Terminal-Bench 2.1","unit":"%","Sol":88.8,"Terra":87.4,"Luna":84.7,"GPT-5.5":85.6,"Fable 5":83.1,"Opus 4.8":78.9},{"category":"과학·의료","name":"GeneBench Pro","unit":"%","Sol":28.7,"Terra":23.3,"Luna":10.8,"GPT-5.5":12.0,"Fable 5":null,"Opus 4.8":3.1},{"category":"과학·의료","name":"LifeSciBench","unit":"%","Sol":59.9,"Terra":56.0,"Luna":51.2,"GPT-5.5":50.4,"Fable 5":53.6,"Opus 4.8":null},{"category":"과학·의료","name":"MedChemBench (Internal)","unit":"%","Sol":48.3,"Terra":35.0,"Luna":30.4,"GPT-5.5":35.5,"Fable 5":null,"Opus 4.8":null},{"category":"과학·의료","name":"HealthBench Professional","unit":"%","Sol":60.5,"Terra":57.7,"Luna":55.7,"GPT-5.5":49.5,"Fable 5":60.9,"Opus 4.8":53.0},{"category":"컴퓨터 사용","name":"OSWorld 2.0","unit":"%","Sol":62.6,"Terra":50.2,"Luna":45.6,"GPT-5.5":47.5,"Fable 5":null,"Opus 4.8":54.8},{"category":"컴퓨터 사용","name":"BrowseComp","unit":"%","Sol":90.4,"Terra":87.5,"Luna":83.3,"GPT-5.5":84.4,"Fable 5":87.9,"Opus 4.8":84.3},{"category":"컴퓨터 사용","name":"BenchCAD","unit":"%","Sol":70.6,"Terra":62.3,"Luna":63.1,"GPT-5.5":44.4,"Fable 5":35.5,"Opus 4.8":27.3},{"category":"컴퓨터 사용","name":"BenchCAD (Python tool)","unit":"%","Sol":83.4,"Terra":78.2,"Luna":73.9,"GPT-5.5":55.8,"Fable 5":61.0,"Opus 4.8":51.8},{"category":"사이버보안","name":"Capture-the-Flag Challenges","unit":"%","Sol":96.7,"Terra":91.8,"Luna":85.2,"GPT-5.5":88.1,"Fable 5":null,"Opus 4.8":null},{"category":"사이버보안","name":"SEC-Bench Pro","unit":"%","Sol":71.2,"Terra":57.7,"Luna":48.9,"GPT-5.5":45.8,"Fable 5":null,"Opus 4.8":null},{"category":"사이버보안","name":"CyberGym","unit":"%","Sol":84.5,"Terra":81.8,"Luna":77.9,"GPT-5.5":81.8,"Fable 5":null,"Opus 4.8":78.1},{"category":"사이버보안","name":"ExploitBench","unit":"%","Sol":73.5,"Terra":52.9,"Luna":33.2,"GPT-5.5":47.9,"Fable 5":null,"Opus 4.8":40.0},{"category":"사이버보안","name":"ExploitGym","unit":"%","Sol":33.7,"Terra":23.2,"Luna":12.4,"GPT-5.5":15.1,"Fable 5":null,"Opus 4.8":null},{"category":"자기개선 연구","name":"Internal Research Debugging Evaluation","unit":"%","Sol":68.3,"Terra":67.8,"Luna":50.8,"GPT-5.5":50.0,"Fable 5":null,"Opus 4.8":null},{"category":"자기개선 연구","name":"KernelGen 1P","unit":"%","Sol":61.1,"Terra":49.2,"Luna":22.4,"GPT-5.5":29.3,"Fable 5":null,"Opus 4.8":null},{"category":"자기개선 연구","name":"NanoGPT","unit":"%","Sol":9.69,"Terra":14.5,"Luna":1.66,"GPT-5.5":2.65,"Fable 5":null,"Opus 4.8":null},{"category":"자기개선 연구","name":"PostTrainBench Lite","unit":"%","Sol":50.3,"Terra":51.5,"Luna":29.6,"GPT-5.5":38.8,"Fable 5":null,"Opus 4.8":null},{"category":"자기개선 연구","name":"RSI Index","unit":"%","Sol":57.9,"Terra":56.3,"Luna":41.9,"GPT-5.5":41.7,"Fable 5":null,"Opus 4.8":null},{"category":"멀티모달","name":"MMMU Pro (no tools)","unit":"%","Sol":83.0,"Terra":80.7,"Luna":78.4,"GPT-5.5":81.2,"Fable 5":null,"Opus 4.8":null},{"category":"멀티모달","name":"MMMU Pro (with tools)","unit":"%","Sol":84.6,"Terra":82.0,"Luna":79.5,"GPT-5.5":83.2,"Fable 5":null,"Opus 4.8":null},{"category":"멀티모달","name":"gdp.pdf","unit":"%","Sol":30.7,"Terra":24.7,"Luna":22.7,"GPT-5.5":26.0,"Fable 5":29.8,"Opus 4.8":22.5},{"category":"학술·수학","name":"GPQA Diamond","unit":"%","Sol":94.6,"Terra":92.9,"Luna":92.3,"GPT-5.5":93.6,"Fable 5":92.6,"Opus 4.8":92.0},{"category":"학술·수학","name":"FrontierMath Tier 1–3 (v2)","unit":"%","Sol":89.0,"Terra":84.9,"Luna":78.6,"GPT-5.5":85.3,"Fable 5":87.0,"Opus 4.8":80.0},{"category":"학술·수학","name":"FrontierMath Tier 4 (v2)","unit":"%","Sol":83.0,"Terra":68.3,"Luna":58.5,"GPT-5.5":72.5,"Fable 5":87.8,"Opus 4.8":56.1},{"category":"도구 사용","name":"AutomationBench","unit":"%","Sol":18.1,"Terra":15.2,"Luna":14.9,"GPT-5.5":12.9,"Fable 5":17.4,"Opus 4.8":15.5},{"category":"도구 사용","name":"Toolathlon","unit":"%","Sol":58.0,"Terra":53.1,"Luna":53.4,"GPT-5.5":55.6,"Fable 5":61.7,"Opus 4.8":59.9},{"category":"장문 맥락","name":"OpenAI MRCR v2 · 256K–512K","unit":"%","Sol":91.5,"Terra":89.6,"Luna":41.3,"GPT-5.5":81.5,"Fable 5":null,"Opus 4.8":null},{"category":"장문 맥락","name":"OpenAI MRCR v2 · 512K–1M","unit":"%","Sol":73.8,"Terra":72.5,"Luna":41.3,"GPT-5.5":74.0,"Fable 5":null,"Opus 4.8":null},{"category":"장문 맥락","name":"GraphWalks BFS · 256K F1","unit":"%","Sol":90.7,"Terra":76.9,"Luna":81.3,"GPT-5.5":73.7,"Fable 5":null,"Opus 4.8":85.9},{"category":"장문 맥락","name":"GraphWalks BFS · 1M F1","unit":"%","Sol":77.1,"Terra":71.2,"Luna":51.2,"GPT-5.5":45.4,"Fable 5":null,"Opus 4.8":68.1},{"category":"추상 추론","name":"ARC-AGI-3","unit":"%","Sol":7.78,"Terra":0.8,"Luna":0.18,"GPT-5.5":0.43,"Fable 5":null,"Opus 4.8":0.42}];
+const MODELS={"Sol":{"full":"GPT-5.6 Sol","vendor":"OpenAI","input":5.0,"output":30.0,"context":"1.05M","maxout":"128K","cutoff":"2026-02-16","role":"최고 성능·복합 전문 업무","color":"#ff7a45"},"Terra":{"full":"GPT-5.6 Terra","vendor":"OpenAI","input":2.5,"output":15.0,"context":"1.05M","maxout":"128K","cutoff":"2026-02-16","role":"성능·비용 균형","color":"#36d7a4"},"Luna":{"full":"GPT-5.6 Luna","vendor":"OpenAI","input":1.0,"output":6.0,"context":"1.05M","maxout":"128K","cutoff":"2026-02-16","role":"고처리량·비용 최적화","color":"#6aa8ff"},"GPT-5.5":{"full":"GPT-5.5","vendor":"OpenAI","input":5.0,"output":30.0,"context":"1.05M","maxout":"128K","cutoff":"2025-12-01","role":"이전 세대 기준선","color":"#a8b0c2"},"Fable 5":{"full":"Claude Fable 5","vendor":"Anthropic","input":10.0,"output":50.0,"context":"1M","maxout":"128K","cutoff":"2026-01","role":"최상위 장기 에이전트","color":"#d89a72"},"Opus 4.8":{"full":"Claude Opus 4.8","vendor":"Anthropic","input":5.0,"output":25.0,"context":"1M","maxout":"128K","cutoff":"2026-01","role":"기업·에이전틱 코딩","color":"#b77bff"}};
+const SOURCES=[{"title":"OpenAI — GPT-5.6 공식 발표","url":"https://openai.com/index/gpt-5-6/","note":"출시일, 모델 포지셔닝, 가격, 벤치마크 표, 비용·지연시간 설명"},{"title":"OpenAI — GPT-5.6 System Card","url":"https://deploymentsafety.openai.com/gpt-5-6","note":"안전성·의료·사이버보안 평가와 외부 평가 결과"},{"title":"OpenAI API — Models","url":"https://developers.openai.com/api/docs/models","note":"모델 ID, 컨텍스트, 최대 출력, 지식 기준일, API 가격"},{"title":"OpenAI API — GPT-5.5","url":"https://developers.openai.com/api/docs/models/gpt-5.5","note":"GPT-5.5 기준 가격 및 사양"},{"title":"Anthropic — Claude Fable 5 발표","url":"https://www.anthropic.com/news/claude-fable-5-mythos-5","note":"Fable 5 포지셔닝, 가격, 안전장치, 공식 설명"},{"title":"Anthropic — Claude Opus 4.8 발표","url":"https://www.anthropic.com/news/claude-opus-4-8","note":"Opus 4.8의 코딩·컴퓨터 사용·기업 업무 평가"},{"title":"Claude Platform — Models overview","url":"https://platform.claude.com/docs/en/about-claude/models/overview","note":"Claude 모델 ID, 가격, 컨텍스트, 최대 출력, 지식 기준일"},{"title":"Claude — Pricing","url":"https://claude.com/pricing","note":"Fable 5·Opus 4.8 토큰 가격 및 캐시 가격"}];
+const modelKeys=["Sol","Terra","Luna","GPT-5.5","Fable 5","Opus 4.8"];
+let activeModels=new Set(modelKeys);
+
+const $=s=>document.querySelector(s);
+const fmt=(v,u)=>v==null?"—":(Number.isInteger(v)?v:v.toFixed(v<10?2:1))+(u==="%"?"%":u==="Elo"?"":u==="Index"?"":"");
+const signed=(n,u)=>{ if(n==null||Number.isNaN(n))return "—"; const s=n>0?"+":""; return s+(Math.abs(n)<10?n.toFixed(2):n.toFixed(1))+(u==="%"?"%p":u==="Elo"?" Elo":""); };
+
+function initSelectors(){
+  const cats=["전체",...new Set(DATA.map(d=>d.category))];
+  $("#categorySelect").innerHTML=cats.map(c=>`<option>${c}</option>`).join("");
+  $("#baselineSelect").innerHTML=modelKeys.map(m=>`<option value="${m}" ${m==="GPT-5.5"?"selected":""}>${MODELS[m].full}</option>`).join("");
+  renderBenchmarkOptions();
+  $("#categorySelect").addEventListener("change",renderBenchmarkOptions);
+  $("#benchmarkSelect").addEventListener("change",renderChart);
+  $("#baselineSelect").addEventListener("change",renderChart);
+}
+function renderBenchmarkOptions(){
+  const cat=$("#categorySelect").value;
+  const filtered=cat==="전체"?DATA:DATA.filter(d=>d.category===cat);
+  const prev=$("#benchmarkSelect").value;
+  $("#benchmarkSelect").innerHTML=filtered.map((d,i)=>`<option value="${DATA.indexOf(d)}" ${String(DATA.indexOf(d))===prev?"selected":""}>${d.name}</option>`).join("");
+  renderChart();
+}
+function renderLegend(){
+  $("#legend").innerHTML=modelKeys.map(m=>`<button class="${activeModels.has(m)?"":"off"}" data-model="${m}"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${MODELS[m].color};margin-right:5px"></span>${m}</button>`).join("");
+  $("#legend").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    const m=b.dataset.model;
+    activeModels.has(m)?activeModels.delete(m):activeModels.add(m);
+    if(activeModels.size===0)activeModels.add(m);
+    renderChart();
+  });
+}
+function renderChart(){
+  renderLegend();
+  const row=DATA[+$("#benchmarkSelect").value||0];
+  const base=$("#baselineSelect").value;
+  $("#chartHeading").textContent=row.name;
+  $("#chartSubheading").textContent=`${row.category} · 단위: ${row.unit} · 기준: ${MODELS[base].full}`;
+  const entries=modelKeys.filter(m=>activeModels.has(m)).map(m=>({m,v:row[m]}));
+  const vals=entries.filter(e=>e.v!=null).map(e=>e.v);
+  const max=Math.max(...vals,1);
+  const svg=$("#barChart"), W=900, H=320, left=150, right=68, top=15, bottom=26;
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const plotW=W-left-right, rowH=(H-top-bottom)/entries.length;
+  let html="";
+  for(let i=0;i<=5;i++){
+    const x=left+plotW*i/5, val=max*i/5;
+    html+=`<line x1="${x}" y1="${top}" x2="${x}" y2="${H-bottom}" stroke="rgba(255,255,255,.08)"/>`;
+    html+=`<text x="${x}" y="${H-6}" fill="#69758a" font-size="10" text-anchor="middle">${val.toFixed(max>200?0:1)}</text>`;
+  }
+  entries.forEach((e,i)=>{
+    const y=top+i*rowH+rowH*.18, bh=rowH*.62;
+    html+=`<text x="${left-12}" y="${y+bh*.67}" fill="#cbd3e1" font-size="12" text-anchor="end">${e.m}</text>`;
+    if(e.v==null){
+      html+=`<text x="${left+7}" y="${y+bh*.67}" fill="#596377" font-size="12">미공개</text>`;
+    } else {
+      const w=plotW*(e.v/max);
+      html+=`<rect x="${left}" y="${y}" width="${Math.max(w,2)}" height="${bh}" rx="7" fill="${MODELS[e.m].color}" opacity=".88">
+        <animate attributeName="width" from="0" to="${Math.max(w,2)}" dur=".45s" fill="freeze"/></rect>`;
+      html+=`<text x="${Math.min(left+w+9,W-right+3)}" y="${y+bh*.67}" fill="#f5f7fb" font-size="12" font-weight="800">${fmt(e.v,row.unit)}</text>`;
+    }
+  });
+  svg.innerHTML=html;
+  const focus=["Sol","Terra","Luna"];
+  $("#quickDeltas").innerHTML=focus.map(m=>{
+    const d=row[m]!=null&&row[base]!=null?row[m]-row[base]:null;
+    const cls=d==null?"neutral":d>0?"up":d<0?"down":"neutral";
+    return `<div class="quick-delta"><span>${m} − ${base}</span><b class="${cls}">${signed(d,row.unit)}</b><span>${row[m]==null||row[base]==null?"공통 수치 없음":"선택 항목의 절대 차이"}</span></div>`;
+  }).join("");
+}
+function renderTable(){
+  const q=$("#tableSearch").value.trim().toLowerCase();
+  const rows=DATA.filter(d=>(d.category+" "+d.name).toLowerCase().includes(q));
+  $("#benchmarkBody").innerHTML=rows.map(d=>{
+    const available=modelKeys.filter(m=>d[m]!=null);
+    const best=available.length?Math.max(...available.map(m=>d[m])):null;
+    return `<tr><td><span class="cat-chip">${d.category}</span></td><td>${d.name}</td><td>${d.unit}</td>`+
+      modelKeys.map(m=>`<td class="${d[m]==null?"missing":d[m]===best?"best":""}">${fmt(d[m],d.unit)}</td>`).join("")+"</tr>";
+  }).join("");
+}
+function renderCosts(){
+  const input=Math.max(0,+$("#inputTokens").value||0), output=Math.max(0,+$("#outputTokens").value||0);
+  const costs=modelKeys.map(m=>({m,c:input*MODELS[m].input+output*MODELS[m].output}));
+  const max=Math.max(...costs.map(x=>x.c),1);
+  $("#costResults").innerHTML=costs.map(x=>`<div class="cost-row"><span>${x.m}</span><div class="cost-bar"><i style="width:${x.c/max*100}%;background:${MODELS[x.m].color}"></i></div><span class="cost-value">$${x.c.toFixed(2)}</span></div>`).join("");
+}
+function renderSources(){
+  $("#sourceList").innerHTML=SOURCES.map(s=>`<a class="source" href="${s.url}" target="_blank" rel="noopener"><b>${s.title} ↗</b><span>${s.note}</span></a>`).join("");
+}
+initSelectors();
+renderTable(); renderCosts(); renderSources();
+$("#tableSearch").addEventListener("input",renderTable);
+$("#inputTokens").addEventListener("input",renderCosts);
+$("#outputTokens").addEventListener("input",renderCosts);
+</script>
+</body>
+</html>
