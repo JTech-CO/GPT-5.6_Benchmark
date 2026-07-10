@@ -1,6 +1,8 @@
 # GPT-5.6 Benchmark Report
 
-GPT-5.6 Sol, Terra, Luna를 GPT-5.5, Claude Fable 5, Claude Opus 4.8과 비교하는 정적 웹사이트입니다.
+`GPT-5.6 Sol, Terra, Luna`를 `GPT-5.5`, `Claude Fable 5`, `Claude Opus 4.8`과 비교하는 정적 웹사이트입니다.
+
+또한, `GPT 5.6 Sol`을 사용해서 만들어졌습니다.
 
 ## 실행
 
