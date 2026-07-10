@@ -18,17 +18,14 @@ python -m http.server 8000
 http://localhost:8000
 ```
 
-## GitHub Pages 배포
+웹 실행:
 
-1. 저장소의 기본 브랜치를 `main`으로 설정합니다.
-2. 저장소의 `Settings`에서 `Pages`를 엽니다.
-3. `Source`를 `GitHub Actions`로 선택합니다.
-4. `main` 브랜치에 푸시하면 포함된 워크플로가 사이트를 배포합니다.
+[https://jtech-co.github.io/GPT-5.6_Benchmark/](<https://jtech-co.github.io/GPT-5.6_Benchmark/>)
 
 ## 구조
 
 ```text
-.
+GPT-5.6_Benchmark
 ├── .github
 │   └── workflows
 │       └── deploy-pages.yml
